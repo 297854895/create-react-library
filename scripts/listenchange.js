@@ -14,7 +14,7 @@ chokidar.watch(
     'all',
     function(event, path) {
       if (event === 'change') {
-        fs.copySync(resolveApp(path), resolveApp('dist' + path.substr(3)), {
+        fs.copySync(resolveApp(path), resolveApp('lib' + path.substr(3)), {
           dereference: true,
           filter: path => path
         })

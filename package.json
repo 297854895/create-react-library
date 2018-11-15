@@ -1,33 +1,43 @@
 {
-  "name": "create-react-library",
+  "name": "ty-front",
   "version": "1.0.0",
-  "main": "dist",
+  "main": "lib",
   "author": "zhukecheng",
   "license": "MIT",
-  "scripts": {
-    "dev": "npx babel src -w --out-dir dist & node ./scripts/copystyle.js & node ./scripts/listenchange.js",
-    "build": "npx babel src --out-dir dist & node ./scripts/copystyle.js"
-  },
   "files": [
-    "dist"
+    "lib"
   ],
+  "scripts": {
+    "build": "npx babel --ignore=src/index.js src --out-dir lib & node ./scripts/copystyle.js",
+    "build:lib": "npx babel --ignore=src/index.js src --out-dir lib",
+    "build:style": "node ./scripts/copystyle.js",
+    "dev": "npx babel --ignore=src/index.js src -w --out-dir dist & node ./scripts/copystyle.js & node ./scripts/listenchange.js"
+  },
+  "peerDependencies": {
+    "react": ">=16.0.0",
+    "react-dom": ">=16.0.0"
+  },
   "dependencies": {
     "@babel/cli": "^7.1.2",
-    "@babel/core": "^7.1.2",
+    "@babel/core": "^7.1.6",
     "@babel/plugin-external-helpers": "^7.0.0",
     "@babel/plugin-proposal-class-properties": "^7.1.0",
     "@babel/plugin-proposal-export-default-from": "^7.0.0",
     "@babel/plugin-syntax-dynamic-import": "^7.0.0",
     "@babel/polyfill": "^7.0.0",
-    "@babel/preset-env": "^7.1.0",
+    "@babel/preset-env": "^7.1.6",
     "@babel/preset-react": "^7.0.0",
     "add": "^2.0.6",
     "babel-plugin-css-modules-transform": "^1.6.1",
     "babel-plugin-import": "^1.11.0",
     "babel-preset-react-app": "^5.0.4",
     "chokidar": "^2.0.4",
+    "fs": "^0.0.1-security",
     "fs-extra": "^7.0.0",
-    "react": "^16.6.0",
-    "yarn": "^1.10.1"
+    "react": "^16.6.3",
+    "webpack": "^4.25.1"
+  },
+  "devDependencies": {
+    "webpack-cli": "^3.1.2"
   }
 }

@@ -11,7 +11,7 @@ try {
     } else {
       files.forEach(function(fileName) {
         var path = '/ui/'+ fileName + (fileName === 'style' ? '' : '/style')
-        fs.copySync(resolveApp('src' + path), resolveApp('dist' + path), {
+        fs.copySync(resolveApp('src' + path), resolveApp('lib' + path), {
           dereference: true,
           filter: path => path
         })

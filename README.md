@@ -11,10 +11,10 @@ npm run build
 ```js
 // babel plugins
 [
-  require.resolve('create-react-library/dist/utils/import-style'),
+  require.resolve('create-react-library/lib/utils/import-style'),
   {
     library: 'create-react-library',
-    lib: 'dist',
+    lib: 'lib',
     style: {
       type: 'less'
     }

@@ -1,10 +1,16 @@
-var import_theme = false
+var default_config = {
+  library: 'create-react-library',
+  lib: 'lib',
+  style: {
+    name: 'index',
+    type: 'css'
+  }
+}
 
-module.exports = function(babel, config) {
-  config.style = {
-    type: 'css',
-    path: 'ui',
-    ...config.style
+module.exports = function(babel, configs) {
+  var config = {
+    ...default_config,
+    ...configs
   }
   return {
     visitor: {
@@ -15,12 +21,15 @@ module.exports = function(babel, config) {
             init_path = node.source.value.split('/')
         if (init_path.length !== 2) return
         var module_path = init_path[1],
-            style_arr = config.style.path || ['ui'],
+            style_path = 'ui',
+            style_name = config.style.name || 'index',
+            style_type = config.style.type || 'css',
             t = babel.types
         if (!node) return
         var full_path = library_name + '/' + lib + '/' + module_path,
             dist_path = t.stringLiteral(full_path),
             push_value = null
+        var importArr = []
         path.node.specifiers.forEach(specifier => {
           var diy_name = specifier.local.name,
               module_name = [t.ImportDefaultSpecifier(t.identifier(diy_name || specifier.imported.name))],
@@ -38,12 +47,9 @@ module.exports = function(babel, config) {
           }
           var insert_module = t.ImportDeclaration(module_name,  t.stringLiteral(full_path + '/' + specifier.imported.name))
           path.insertBefore(insert_module)
-          if (module_path !== config.style.path) return
-          if (!import_theme) {
-            path.insertBefore(t.importDeclaration([], t.stringLiteral(full_path + '/style/index.' + config.style.type)))
-            import_theme = true
-          }
-          var w_path = t.stringLiteral(full_path + '/' + specifier.imported.name + '/style/index.' + config.style.type)
+          if (module_path !== style_path) return
+          path.insertBefore(t.importDeclaration([], t.stringLiteral(full_path + '/style/index.css')))
+          var w_path = t.stringLiteral(full_path + '/' + specifier.imported.name + '/style/'+ style_name + '.' + style_type)
           path.insertBefore(t.importDeclaration([], w_path))
         })
         path.remove()

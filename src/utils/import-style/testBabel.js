@@ -7,12 +7,8 @@ babel.transformFile('./test.js', {
     modules: false
   }]],
   plugins: [[path.resolve('index.js'), {
-    library: 'test',
-    lib: 'dist' // style: {
-    //   type: 'css',
-    //   path: 'ui'
-    // }
-
+    library: 'create-react-library',
+    lib: 'lib'
   }]]
 }, function (err, res) {
   console.log(err);
